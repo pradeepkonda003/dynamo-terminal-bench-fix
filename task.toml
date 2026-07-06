@@ -1,0 +1,32 @@
+artifacts = ["/app/report.json"]
+
+[task]
+name = "dynamo/log-report"
+description = "Parse an Apache-style access log into an exact JSON summary report."
+
+[metadata]
+category = "data_processing_and_etl"
+subcategory = "text_processing"
+task_objective = ["transform", "generate"]
+artifact_type = ["text_or_log_file", "generated_output_artifact"]
+expert_time_estimate_hours = 0.3
+model_tested = "GPT-5.4"
+agent_tested = "Terminus-2"
+difficulty_explanation = "Parse a small Apache-style access log, count requests and distinct clients, identify the most requested path, and emit a strict JSON artifact."
+solution_explanation = "Read /app/access.log, count all non-empty log lines, count distinct client IP addresses from the first field, count request paths from quoted HTTP requests, and write /app/report.json."
+verification_explanation = "Pytest validates that /app/report.json exists, is valid JSON, contains exactly the required fields, and matches the expected values."
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 120.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 2048
+storage_mb = 10240
+gpus = 0
+allow_internet = false
+mcp_servers = []
